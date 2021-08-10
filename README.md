@@ -12,3 +12,10 @@ There are a few whys to approch this but I want to do with ANY external dependen
 - some ALGOs to bounding box the chars 
 - other ocr stuff I know from OpenCV 
 
+
+
+// Process the 0123456789.png 
+// build an signature for each letter 
+// some sort of delta in found chars 
+// function to display the image for debugging  
+

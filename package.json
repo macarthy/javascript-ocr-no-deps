@@ -1,0 +1,25 @@
+{
+  "name": "javascript-ocr-no-deps",
+  "version": "1.0.0",
+  "description": "https://www.codewars.com/kata/5ec9e176721b990029ebce83/javascript",
+  "main": "main.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/macarthy/javascript-ocr-no-deps.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/macarthy/javascript-ocr-no-deps/issues"
+  },
+  "homepage": "https://github.com/macarthy/javascript-ocr-no-deps#readme",
+  "dependencies": {
+    "canvas": "^2.8.0"
+  }
+}
