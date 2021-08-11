@@ -30,32 +30,72 @@ let image = new Image(13, 18,
     0xb2,  0x0,  0x8, 0x32, 0x32, 0x32, 0x32, 0x32, 0x32, 0x28,  0x0,  0xe, 0xf5,
     0xe8, 0x1e, 0x15, 0x15, 0x15, 0x15, 0x15, 0x15, 0x15, 0x15, 0x15, 0x6b, 0xff ]);
  
+function x_axis_to_array(x_position, pixel_array)
+{
+    column = [];
+    for(x=x_position, pixel_array.length > x_position; x=x+x_position;) {
+     column.push(pixel_array.length[x]);
+    }
+    return column;
+}
+         
+function find_fully_white_columns(imageObj) {
+    wh =[]                                
+    for(x=0;x<imageObj.width;x++){
+        column = x_axis_to_array(x, imageObj.pixels);        
+        column = column.filter(color => color != '0xffffff');
+        if (column.length > 0) {
+            wh.push(x);
+        }
+    }
+    return wh; 
+}
+ 
 
 function read_image_from_file(f){
     
-    const canvas = createCanvas(200, 200)
-    const context = canvas.getContext("2d");
-    
     loadImage(f).then((image) => {       
-        console.log(image.width);
-        const canvas = createCanvas(200, 200)
+        const canvas = createCanvas(image.width, image.height)
         const context = canvas.getContext("2d");
-      console.log(image);
         context.drawImage(image, 0,0);
-        var imageData = context.getImageData(0,0,10,10);
-        console.log(imageData);
-    });
+        
+        pixel_array=[];
+        for (y=0; y < image.height; y++ ) { 
+            //console.log("row " , y, image.width , image.height) 
+            var imageData = context.getImageData(0,y,image.width,1);
+            //console.log(imageData)
+            
+            for(x=0; x < image.width * 4; x=x+4 ){
+                var [r,g,b,a] = imageData.data.slice(x, x+4)
+                r = r.toString(16);
+                if (r.length == 1) { r = "0" + r }
+                g = g.toString(16);
+                if (g.length == 1) { g = "0" + g }
+                b = b.toString(16);
+                if (b.length == 1) { b = "0" + b }
+                h = ("0x"+ r + g + b); 
+                pixel_array.push(h)
+                
+            }
+        
+        }
+        console.log(pixel_array);
 
 
-    //image = new Image(w,h,data)
-     image = true;   
-    return image; 
+        image = new Image(image.width, image.height, pixel_array);
+        return image;
+    }).catch(err => { console.log('oh no!', err) });
 
-} 
+}
 
 
- read_image_from_file("images/0123456789.png");
 
+
+image = read_image_from_file("images/test0123456789.png");
+
+console.log(image);
+
+console.log(find_fully_white_columns(image));
 // dumb idea a 1.40am
 // get bounding boxes 
 // down grad the image into BLACK / WHITE 
